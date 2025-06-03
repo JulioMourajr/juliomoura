@@ -1,65 +1,79 @@
-# Infra Challenge 20240202
+### Infra Challenge da Coodesh
 
-## Introdução
+Para instruções detalhadas do README original [READMEOriginal.md](./READMEOriginal.md).
 
-Este é um teste para que possamos ver as suas habilidades como DevOps.
+## Minha Solução
 
-Nesse teste você deverá configurar um servidor, aplicar os principais recursos de segurança e trabalhar com Infra as Code
+Este projeto foi desenvolvido com o objetivo de criar uma infraestrutura robusta e escalável na AWS, garantindo alta disponibilidade para o servidor nginx. 
 
-[SPOILER] As instruções de entrega e apresentação do challenge estão no final deste Readme (=
+Escolhi colocar VPC (Virtual Private Cloud) que é uma rede virtual isolada onde todos os recursos são provisionados, garantindo segurança e controle de tráfego. 4 subnets, duas publicas e duas privadas para a aplicação ter alta disponibilidade e resiliência, com o Elastic Load Balancer (ELB) que distribui o tráfego de entrada entre várias instâncias EC2, assegurando balanceamento de carga e redundância.
 
-### Antes de começar
- 
-- Considere como deadline da avaliação a partir do início do teste. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
+Terraform para provisionar o ambiente, evitando assim erros manuais.
+
+## Pré-requisitos
+
+- Instale o [Terraform](https://www.terraform.io/downloads.html) v1.10.5 ou superior
+- Conta AWS com permissões adequadas
+- Chave SSH para acesso às instâncias EC2
+
+## Crie o arquivo main.tf
+
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+provider "aws" {
+  region  = var.region
+  profile = var.profile
+}
+
+. Inicialize o Terraform:
+    ```
+    terraform init
+    ```
+
+## Configuração
+
+1. Crie um arquivo `terraform.tfvars` com as variáveis necessárias:
+    ```ini
+    aws_access_key = "sua_chave_de_acesso"
+    aws_secret_key = "sua_chave_secreta"
+    region         = "us-east-1"
+    ```
+2. Ajuste as variáveis no arquivo [variables.tf](https://medium.com/@habbema/terraform-variables-e2f46ebe3f32) conforme necessário.
+
+## Criaçção do arquivos .tf
+
+# Criar o arquivo que vai configurar a VPC
+
+[vpc.tf](./vpc.tf)
+
+# Configurar grupo de segurança na AWS
+
+[sg.tf](./sg.tf)
+
+# configurar as subnets publicas e privadas
+
+[subnet publica](./publica.tf)
+
+[subnet privada](./privada.tf)
+
+# configurar internet gateway
+
+[Internet Gateway](./igw.tf)
+
+# Configurar Nategateway
+
+[Natgateway](./ngw.tf)
+
+# Configurar Application Load Balancer
+
+[Load Balancer](./alb.tf)
 
 
-## **Parte 1 - Configuração do Servidor**
 
-A sua tarefa consiste em configurar um servidor baseado na nuvem e instalar e configurar alguns componentes básicos.
-
-
-1. Configurar grupo de segurança na AWS
-2. Configuração da redes para o Servidor
-3. Configurar um servidor AWS (recomenda-se o freetier) executando uma versão Ubuntu LTS.
-4. Instalar e configurar qualquer software que você recomendaria em uma configuração de servidor padrão sob as perspectivas de segurança, desempenho, backup e monitorização.
-5. Instalar e configurar o nginx para servir uma página web HTML estática.
-
-
-
-## **Part 2 – Infra as Code**
-
-Como diferencial, você poderá configurar toda a infra-estrutura com ferramentas como:
-
-- Ansible
-- Terraform
-- AWS CDK ou CloudFormation
-
-Ao ter o projeto executando em um servidor e aplicando as melhores práticas de segurança com grupos de segurança e as configurações de rede criando completamente por código.
-
-
-## **Part 3 – Continuous Delivery**
-
-Desenhar e construir uma pipeline para apoiar a entrega contínua da aplicação de monitorização construída na Parte 2 no servidor configurado na Parte 1. Descrever a pipeline utilizando um diagrama de fluxo e explicar o objetivo e o processo de seleção usado em cada uma das ferramentas e técnicas específicas que compõem a sua pipeline. 
-
-## Readme do Repositório
-
-- Deve conter o título do projeto
-- Uma descrição sobre o projeto em frase
-- Deve conter uma lista com linguagem, framework e/ou tecnologias usadas
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
-- Se está usando github pessoal, referencie que é um challenge by coodesh:  
-
->  This is a challenge by [Coodesh](https://coodesh.com/)
-
-## Finalização e Instruções para a Apresentação
-
-1. Adicione o link do repositório com a sua solução no teste
-2. Verifique se o Readme está bom e faça o commit final em seu repositório;
-3. Envie e aguarde as instruções para seguir. Caso o teste tenha apresentação de vídeo, dentro da tela de entrega será possível gravar após adicionar o link do repositório. Sucesso e boa sorte. =)
-
-
-## Suporte
-
-Para tirar dúvidas sobre o processo envie uma mensagem diretamente a um especialista no chat da plataforma. 
