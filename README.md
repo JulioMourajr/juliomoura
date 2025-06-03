@@ -75,6 +75,8 @@ provider "aws" {
 
 [Load Balancer](./alb.tf)
 
+[Diagrama](./Diagrama.png)
+
 ## CI/CD Pipeline com GitLab CI
 
 Configuração de um pipeline CI/CD usando GitLab CI para construir e implantar uma aplicação wordpress em uma EC2 na AWS.
