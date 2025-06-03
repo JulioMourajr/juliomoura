@@ -75,5 +75,61 @@ provider "aws" {
 
 [Load Balancer](./alb.tf)
 
+## CI/CD Pipeline com GitLab CI
+
+Configuração de um pipeline CI/CD usando GitLab CI para construir e implantar uma aplicação wordpress em uma EC2 na AWS.
+
+Primeiro passo é criar o arquivo .gitlab-ci.yml na raiz do projeto.
+
+stages:
+  - validate
+  - plan
+  - apply
+  - deploy
+
+variables:
+  TF_ROOT: "."
+
+before_script:
+  - apk add --no-cache curl unzip
+  - curl -o terraform.zip https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
+  - unzip terraform.zip && mv terraform /usr/local/bin/ && terraform version
+
+validate:
+  stage: validate
+  script:
+    - cd $TF_ROOT
+    - terraform init -input=false
+    - terraform validate
+
+plan:
+  stage: plan
+  script:
+    - cd $TF_ROOT
+    - terraform plan -out=tfplan
+
+apply:
+  stage: apply
+  script:
+    - cd $TF_ROOT
+    - terraform apply -auto-approve tfplan
+  when: manual
+
+2. Lembrar de também configurar as variáveis de ambiente no GitLab
+No GitLab, vá em Settings > CI/CD > Variables e adicione:
+
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+AWS_DEFAULT_REGION (ex: us-east-1)
+Essas variáveis serão usadas pelo Terraform para autenticar na AWS.
+
+Os estágios do pipeline 
+
+validate: Inicializa e valida o código Terraform.
+plan: Gera o plano de execução do Terraform.
+apply: Aplica as mudanças na AWS (manual para evitar execuções acidentais).
+
+Qualquer mudança no codigo e for feito um pull request ou um git push na main
+vai acionar o pipeline. 
 
 
