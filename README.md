@@ -120,11 +120,17 @@ apply:
 2. Lembrar de também configurar as variáveis de ambiente no GitLab
 No GitLab, vá em Settings > CI/CD > Variables e adicione:
 
+todo git push vem antes o git pull
+
+asas
+
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_DEFAULT_REGION (ex: us-east-1)
 Essas variáveis serão usadas pelo Terraform para autenticar na AWS.
 
 eu tenho que adicionar uma linha para gerar conflito.
+
+
 
 
