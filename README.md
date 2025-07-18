@@ -124,6 +124,10 @@ todo git push vem antes o git pull
 
 asas
 
+modificado remotamente para quebrabr
+
+b.o
+
 AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY
 AWS_DEFAULT_REGION (ex: us-east-1)
