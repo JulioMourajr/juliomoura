@@ -125,13 +125,6 @@ AWS_SECRET_ACCESS_KEY
 AWS_DEFAULT_REGION (ex: us-east-1)
 Essas variáveis serão usadas pelo Terraform para autenticar na AWS.
 
-Os estágios do pipeline 
-
-validate: Inicializa e valida o código Terraform.
-plan: Gera o plano de execução do Terraform.
-apply: Aplica as mudanças na AWS (manual para evitar execuções acidentais).
-
-Qualquer mudança no codigo e for feito um pull request ou um git push na main
-vai acionar o pipeline. 
+eu tenho que adicionar uma linha para gerar conflito.
 
 
